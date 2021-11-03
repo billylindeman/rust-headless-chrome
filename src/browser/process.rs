@@ -277,7 +277,6 @@ impl Process {
             "--verbose",
             "--log-level=0",
             "--no-first-run",
-            "--disable-audio-output",
             data_dir_option.as_str(),
         ];
 
@@ -378,7 +377,6 @@ impl Process {
         });
 
         if let Ok(output_result) = chrome_output_result {
-            
             Ok(Url::parse(&output_result?)?)
         } else {
             Err(ChromeLaunchError::PortOpenTimeout {}.into())
@@ -487,7 +485,6 @@ mod tests {
         // see https://github.com/atroche/rust-headless-chrome/issues/261
         setup();
         let lines = "[0703/145506.975691:ERROR:address_tracker_linux.cc(214)] Could not bind NETLINK socket: Permission denied (13)";
-        
         let reader = BufReader::new(lines.as_bytes());
         let ws_url_result = Process::ws_url_from_reader(reader);
         assert_eq!(true, ws_url_result.is_ok());
